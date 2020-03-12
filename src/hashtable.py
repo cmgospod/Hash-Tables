@@ -25,14 +25,14 @@ class HashTable:
         '''
         return hash(key)
 
-
-    def _hash_djb2(self, key):
-        '''
-        Hash an arbitrary key using DJB2 hash
-
-        OPTIONAL STRETCH: Research and implement DJB2
-        '''
-        pass
+    #
+    # def _hash_djb2(self, key):
+    #     '''
+    #     Hash an arbitrary key using DJB2 hash
+    #
+    #     OPTIONAL STRETCH: Research and implement DJB2
+    #     '''
+    #     pass
 
 
     def _hash_mod(self, key):
@@ -54,7 +54,11 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        if self.storage[index]:
+            print('Error: key in use')
+        else:
+            self.storage[index] = value
 
 
 
@@ -66,7 +70,11 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        if self.storage[index]:
+            self.storage[index] = None
+        else:
+            print('Warning: key not found')
 
 
     def retrieve(self, key):
@@ -77,7 +85,8 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        return self.storage[index]
 
 
     def resize(self):
@@ -87,7 +96,12 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        old_storage = self.storage
+        self.capacity *= 2
+        self.storage = [None] * self.capacity
+
+        for bucket_item in old_storage:
+            self.insert(bucket_item.key, bucket_item.value)
 
 
 
